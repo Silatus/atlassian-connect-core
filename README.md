@@ -14,6 +14,7 @@ The easiest way to create an add-on for JIRA and Confluence.
 :---------|:----------
  5.5.x    | 1.2.x
  6.x      | 1.3.x
+ 9.x
 
 ## Getting Started
 
@@ -28,16 +29,16 @@ $ composer require "brezzhnev/atlassian-connect-core"
 Register **route middleware** `jwt` by adding to `app\Http\Kernel.php` the following line:
 
 ``` php
-'jwt' => \AtlassianConnectCore\Http\Middleware\JWTAuth::class
+'atlassian_jwt' => \AtlassianConnectCore\Http\Middleware\JWTAuth::class
 ```
 
 Set the authentication driver to `jwt` in `config/auth.php`:
 
 ``` php
 'guards' => [
-    'web' => [
-        'driver' => 'jwt',
-        'provider' => 'users',
+    'atlassian_connect' => [
+        'driver' => 'atlassian_jwt',
+        'provider' => 'atlassian',
     ],
 ...
 ```
@@ -46,7 +47,7 @@ Set the model class in `config/auth.php` **providers** section:
 
 ``` php
 'providers' => [
-    'users' => [
+    'atlassian' => [
         'driver' => 'eloquent',
         'model' => \AtlassianConnectCore\Models\Tenant::class,
     ],
